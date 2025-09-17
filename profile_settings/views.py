@@ -48,6 +48,7 @@ def settings(request):
 
     # Settings form processing
     empty_input = False
+    error_message = ""
 
     if request.POST.get("settings_submit_form_btn"):
         profile_photo = request.FILES.get("profile_photo")
@@ -55,14 +56,15 @@ def settings(request):
         full_name = request.POST.get("full_name")
         bio = request.POST.get("bio")
 
-        # check if vals are empty if not than update settings
-        if bool(profile_photo) == False or bool(banner_photo) == False or \
-           bool(full_name) == False or full_name == "" or \
-           bool(bio) == False or bio == "":
+        if not full_name or full_name.strip() == "" or not bio or bio.strip() == "":
             empty_input = True
+            error_message = "Full name and bio are required fields."
         else:
-            current_basic_user_profile.profile_photo = profile_photo
-            current_basic_user_profile.banner_photo = banner_photo
+            if profile_photo:
+                current_basic_user_profile.profile_photo = profile_photo
+            if banner_photo:
+                current_basic_user_profile.banner_photo = banner_photo
+            
             current_basic_user_profile.full_name = full_name
             current_basic_user_profile.bio = bio
             current_basic_user_profile.save()
@@ -74,6 +76,8 @@ def settings(request):
         "current_basic_user_profile": current_basic_user_profile,
         "who_to_follow": who_to_follow,
         "topics_to_follow": topics_to_follow,
+        "empty_input": empty_input,
+        "error_message": error_message,
     }
 
     return render(request, "settings/settings.html", data)
