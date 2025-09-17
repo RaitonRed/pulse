@@ -82,14 +82,12 @@
 
   <!-- pagination -->
   <div id="pagination-container">
-    {% if current_page <= 0 %}
-      <a href=""><span class="fa fa-caret-left"></span></a>
-      <a href="{% url 'home' next_page %}"><span class="fa fa-caret-right"></span></a>
-    {% elif current_page > 0%}
+    {% if has_previous %}
       <a href="{% url 'home' previous_page %}"><span class="fa fa-caret-left"></span></a>
+    {% endif %}
+    {% if has_next %}
       <a href="{% url 'home' next_page %}"><span class="fa fa-caret-right"></span></a>
     {% endif %}
-
   </div>
 
 </div><!--/container -->
