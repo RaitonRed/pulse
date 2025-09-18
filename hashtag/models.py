@@ -14,7 +14,10 @@ from django.utils import timezone
 class Topic(models.Model):
     creation_date = models.DateField(default=timezone.now)
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return "Topic: " + str(self.name)
+
+    def tweet_count(self):
+        return self.tweet_set.count()

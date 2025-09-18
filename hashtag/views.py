@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files import File
 from django.contrib.auth.models import User
+from django.db import models
 
 # My Module Imports
 from authentication.models import BasicUserProfile, Follower
@@ -46,14 +47,18 @@ def explore(request):
         BasicUserProfile, ObjectDoesNotExist, random
     )
 
+    popular_topics = Topic.objects.annotate(
+        tweet_count=models.Count('tweet')
+    ).order_by('-tweet_count')[:10]
+
     # Getting the last 10 tweets of each topic
     topics_tweets = {}
 
-    for topic in topics_to_follow:
+    for topic in popular_topics:
         topics_tweet_query = Tweet.objects.filter(
             topic=topic
         )[:10]
-        topics_tweets[topic.id] = topics_tweet_query
+        topics_tweets[topic] = topics_tweet_query
 
     data = {
         "current_basic_user": current_basic_user,
@@ -95,7 +100,7 @@ def topic_explore(request, topic, page):
 
     # Get the current topic
     try:
-        current_topic = Topic.objects.get(name=topic)
+        current_topic = Topic.objects.get(name=topic.lower())
     except ObjectDoesNotExist:
         current_topic = None
 

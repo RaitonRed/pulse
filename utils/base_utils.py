@@ -1,3 +1,5 @@
+from django.db import models
+
 # Left Nav Tweet form processing
 def left_nav_tweet_form_processing(request, Tweet, current_basic_user_profile):
     if request.POST.get("hidden_panel_tweet_submit_btn"):
@@ -47,11 +49,9 @@ def get_who_to_follow(BasicUserProfile, ObjectDoesNotExist, random):
 # Topics to follow
 def get_topics_to_follow(Topic, ObjectDoesNotExist, random):
     try:
-        all_topics = Topic.objects.all()
-        if not all_topics:
-            return []
-        
-        topics_to_follow = random.sample(list(all_topics), min(5, len(all_topics)))
-        return topics_to_follow
+        popular_topic = Topic.objects.annotate(
+            tweet_count=models.Count('tweet')
+        ).order_by('-tweet_count').first()
+        return popular_topic
     except ObjectDoesNotExist:
         return []

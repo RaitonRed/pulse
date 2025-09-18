@@ -1,9 +1,12 @@
 # Main Imports
+import re
 
 # Django Imports
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # My Module Imports
 from authentication.models import BasicUserProfile
@@ -26,18 +29,24 @@ class Tweet(models.Model):
     image = models.ImageField(
         upload_to="tweet_photo/", blank=True, null=True
     )
-    topic = models.ForeignKey(
-        Topic,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True
-    )
+    topic = models.ManyToManyField(Topic, blank=True)
     tweet_like_amount = models.IntegerField(default=0)
     tweet_comment_amount = models.IntegerField(default=0)
 
     def __str__(self):
         return "Tweet id: " + str(self.id)
+    
+    def extract_hashtags(self):
+        """Extracts hashtags from the tweet content."""
+        return re.findall(r"#(\w+)", self.content)
 
+@receiver(post_save, sender=Tweet)
+def save_tweet_topics(sender, instance, created, **kwargs):
+    if created:
+        hashtags = instance.extract_hashtags()
+        for tag_name in hashtags:
+            topic, created = Topic.objects.get_or_create(name=tag_name.lower())
+            instance.topic.add(topic)
 
 # Tweet Comment
 # --------------
