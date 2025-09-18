@@ -48,17 +48,10 @@ def get_who_to_follow(BasicUserProfile, ObjectDoesNotExist, random):
 def get_topics_to_follow(Topic, ObjectDoesNotExist, random):
     try:
         all_topics = Topic.objects.all()
-        topics_count = all_topics.count()
+        if not all_topics:
+            return []
+        
+        topics_to_follow = random.sample(list(all_topics), min(5, len(all_topics)))
+        return topics_to_follow
     except ObjectDoesNotExist:
         return []
-
-    if topics_count == 0:
-        return []
-
-    topics_to_follow = []
-    for i in range(min(5, topics_count)):  # Get up to 5 topics
-        random_index = random.randint(0, topics_count - 1)
-        random_topic = all_topics[random_index]
-        topics_to_follow.append(random_topic)
-
-    return topics_to_follow
