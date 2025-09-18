@@ -241,20 +241,23 @@
 
     <!-- topics to follow -->
     <div id="topics-to-follow">
-      <div id="topics-to-follow-header">
-          <h3>Topics to follow</h3>
-          <div id="topics-horizontal-line"></div>
-      </div>
+        <div id="topics-to-follow-header">
+            <h3>Topics to follow</h3>
+            <div id="topics-horizontal-line"></div>
+        </div>
 
-      {% for topic in topics_to_follow %}
-        <a href="{% url 'topic_explore' topic.name page %}">
-          <div id="topics-to-follow-cell">
-            <h4>#{{ topic.name }}</h4>
-            <p>Popular right now</p>
-          </div>
-        </a>
-      {% endfor %}
-
+        {% if topics_to_follow %}
+            {% for topic in topics_to_follow %}
+                <a href="{% url 'topic_explore' topic.name 0 %}">
+                    <div id="topics-to-follow-cell">
+                        <h4>#{{ topic.name }}</h4>
+                        <p>Popular right now</p>
+                    </div>
+                </a>
+            {% endfor %}
+        {% else %}
+            <p>No topics available</p>
+        {% endif %}
     </div>
 
       <!-- who to follow -->
