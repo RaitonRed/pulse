@@ -39,26 +39,27 @@ def explore(request):
         ObjectDoesNotExist
     )
 
-    # Topics to follow
-    topics_to_follow = get_topics_to_follow(Topic, ObjectDoesNotExist, random)
+    try:
+        topics_to_follow = Topic.objects.annotate(
+            tweet_count=models.Count('tweet')
+        ).order_by('-tweet_count')[:10]
+    except ObjectDoesNotExist:
+        topics_to_follow = []
+
 
     # Who to follow box cells
     who_to_follow = get_who_to_follow(
         BasicUserProfile, ObjectDoesNotExist, random
     )
 
-    popular_topics = Topic.objects.annotate(
-        tweet_count=models.Count('tweet')
-    ).order_by('-tweet_count')[:10]
-
     # Getting the last 10 tweets of each topic
     topics_tweets = {}
 
-    for topic in popular_topics:
+    for topic in topics_to_follow:
         topics_tweet_query = Tweet.objects.filter(
-            topic=topic
+            topics=topic 
         )[:10]
-        topics_tweets[topic] = topics_tweet_query
+        topics_tweets[topic.id] = topics_tweet_query
 
     data = {
         "current_basic_user": current_basic_user,
@@ -72,7 +73,6 @@ def explore(request):
         return HttpResponseRedirect("/auth/signup/")
     else:
         return render(request, "hashtag/explore.html", data)
-
 
 def topic_explore(request, topic, page):
     """in this page the users can see a topics tweet feed"""

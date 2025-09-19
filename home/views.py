@@ -217,8 +217,13 @@ def home(request, page):
     ).order_by('?')[:5]  # Random 5 profiles
     
     # Get topics to follow
-    topics_to_follow = Topic.objects.order_by('?')[:5]  # Random 5 topics
-    
+    try:
+        topics_to_follow = Topic.objects.annotate(
+            tweet_count=Count('tweet')
+        ).order_by('-tweet_count')[:5]
+    except ObjectDoesNotExist:
+        topics_to_follow = []
+
     data = {
         "current_basic_user": current_basic_user,
         "current_basic_user_profile": current_basic_user_profile,

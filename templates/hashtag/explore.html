@@ -12,7 +12,7 @@
 {% for topic in topics_to_follow %}
   <div id="topic-header-box-container">
     <p><i class="ri-message-2-fill"></i></p>
-    <h3>{{ topic.name }}</h3>
+    <h3>#{{ topic.name }}</h3>
   </div>
 
   {% for tweet in topics_tweets|get_key_value:topic.id %}

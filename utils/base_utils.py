@@ -51,7 +51,7 @@ def get_topics_to_follow(Topic, ObjectDoesNotExist, random):
     try:
         popular_topic = Topic.objects.annotate(
             tweet_count=models.Count('tweet')
-        ).order_by('-tweet_count').first()
-        return popular_topic
+        ).order_by('-tweet_count')[:5]
+        return list(popular_topic)
     except ObjectDoesNotExist:
         return []

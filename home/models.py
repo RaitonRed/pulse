@@ -16,6 +16,7 @@ from hashtag.models import Topic
 # Tweet Model
 # --------------
 # This model holdes the records of tweets made by users
+# home/models.py
 class Tweet(models.Model):
     user = models.ForeignKey(
         BasicUserProfile,
@@ -29,7 +30,7 @@ class Tweet(models.Model):
     image = models.ImageField(
         upload_to="tweet_photo/", blank=True, null=True
     )
-    topic = models.ManyToManyField(Topic, blank=True)
+    topics = models.ManyToManyField(Topic, blank=True)
     tweet_like_amount = models.IntegerField(default=0)
     tweet_comment_amount = models.IntegerField(default=0)
 
