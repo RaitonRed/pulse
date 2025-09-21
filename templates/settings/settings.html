@@ -34,6 +34,18 @@
     </div>
     {% endif %}
 
+    {% if username_taken %}
+    <div class="error-message">
+        {{ error_message }}
+    </div>
+    {% endif %}
+
+    {% if invalid_username %}
+    <div class="error-message">
+        {{ error_message }}
+    </div>
+    {% endif %}
+
     <form method="POST" action="{% url 'settings' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <label>Profile Photo</label>
@@ -41,6 +53,9 @@
 
         <label>Banner Photo</label>
         <input type="file" name="banner_photo" />
+
+        <label>Username</label>
+        <input type="text" placeholder="e.g. johndoe" name="username" value="{{ current_basic_user.username }}" />
 
         <label>Full Name</label>
         <input type="text" placeholder="e.g. John Doe" name="full_name" value="{{ current_basic_user_profile.full_name }}" />

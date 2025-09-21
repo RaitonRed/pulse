@@ -1,5 +1,7 @@
 # Main Imports
 import random
+import re
+
 # Django Imports
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import HttpResponseRedirect
@@ -49,27 +51,43 @@ def settings(request):
     # Settings form processing
     empty_input = False
     error_message = ""
+    username_taken = False
+    invalid_username = False
 
     if request.POST.get("settings_submit_form_btn"):
         profile_photo = request.FILES.get("profile_photo")
         banner_photo = request.FILES.get("banner_photo")
+        username = request.POST.get("username")
         full_name = request.POST.get("full_name")
         bio = request.POST.get("bio")
 
-        if not full_name or full_name.strip() == "" or not bio or bio.strip() == "":
+        if not full_name or full_name.strip() == "" or not username or username.strip() == "":
             empty_input = True
-            error_message = "Full name and bio are required fields."
+            error_message = "Username and full name are required fields."
         else:
-            if profile_photo:
-                current_basic_user_profile.profile_photo = profile_photo
-            if banner_photo:
-                current_basic_user_profile.banner_photo = banner_photo
-            
-            current_basic_user_profile.full_name = full_name
-            current_basic_user_profile.bio = bio
-            current_basic_user_profile.save()
-            return HttpResponseRedirect("/profile/")
-
+            if not re.match("^[a-zA-Z0-9_]+$", username):
+                invalid_username = True
+                error_message = "Username can only contain letters, numbers and underscores."
+            else:
+                if User.objects.exclude(id=current_basic_user.id).filter(username=username).exists():
+                    username_taken = True
+                    error_message = "Username is already taken."
+                else:
+                    if profile_photo:
+                        current_basic_user_profile.profile_photo = profile_photo
+                    if banner_photo:
+                        current_basic_user_profile.banner_photo = banner_photo
+                    
+                    current_basic_user.username = username
+                    current_basic_user.save()
+                    
+                    current_basic_user_profile.full_name = full_name
+                    current_basic_user_profile.bio = bio
+                    current_basic_user_profile.save()
+                    
+                    request.session["basic_user_username"] = username
+                    
+                    return HttpResponseRedirect("/profile/")
 
     data = {
         "current_basic_user": current_basic_user,
@@ -77,6 +95,8 @@ def settings(request):
         "who_to_follow": who_to_follow,
         "topics_to_follow": topics_to_follow,
         "empty_input": empty_input,
+        "username_taken": username_taken,
+        "invalid_username": invalid_username,
         "error_message": error_message,
     }
 
