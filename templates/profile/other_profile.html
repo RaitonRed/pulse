@@ -29,16 +29,20 @@
         <div id="profile-photo"></div>
       {% endif %}
 
-      <div id="clear"></div>
-      <form method="POST" action="{% url 'other_user_profile' other_user_profile.user.username %}">
-          {% csrf_token %}
-          {% if already_follower == False %}
-            <input type="submit" id="follow-submit-btn" value="Follow" name="other_user_profile_follow_submit_btn" />
-          {% else %}
-            <input type="submit" id="follow-submit-btn" value="Following" name="other_user_profile_follow_submit_btn" />
-          {% endif %}
-      </form>
-      <div id="clear"></div>
+    <div id="clear"></div>
+    {% if is_own_profile %}
+        <a href="{% url 'settings' %}">Edit profile</a>
+    {% else %}
+        <form method="POST" action="{% url 'other_user_profile' other_user_profile.user.username %}">
+            {% csrf_token %}
+            {% if already_follower == False %}
+                <input type="submit" id="follow-submit-btn" value="Follow" name="other_user_profile_follow_submit_btn" />
+            {% else %}
+                <input type="submit" id="follow-submit-btn" value="Following" name="other_user_profile_follow_submit_btn" />
+            {% endif %}
+        </form>
+    {% endif %}
+    <div id="clear"></div>
   </div>
 
 </div>

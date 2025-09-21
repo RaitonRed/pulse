@@ -176,13 +176,14 @@ def other_user_profile(request, other_user_username):
 
     # Profile follow form processing
     already_follower = False
+    is_own_profile = current_basic_user_profile == other_user_profile
 
-    if request.POST.get("other_user_profile_follow_submit_btn"):
+    if request.POST.get("other_user_profile_follow_submit_btn") and not is_own_profile:
         is_follower = Follower.objects.filter(
             following=other_user_profile,
             follower=current_basic_user_profile,
         )
-        if is_follower == None or is_follower == [] or bool(is_follower) == False:
+        if not is_follower.exists():
             new_follower = Follower(
                 following=other_user_profile,
                 follower=current_basic_user_profile,
@@ -227,6 +228,7 @@ def other_user_profile(request, other_user_username):
         "follower_amount": len(all_followers),
         "following_amount": len(all_followings),
         "already_follower": already_follower,
+        "is_own_profile": is_own_profile,
     }
 
     if current_basic_user == None:
