@@ -210,19 +210,19 @@ def home(request, page):
         follower=current_basic_user_profile
     ).values_list('following__id', flat=True)
     
-    who_to_follow = BasicUserProfile.objects.exclude(
-        id__in=already_following
-    ).exclude(
-        id=current_basic_user_profile.id
-    ).order_by('?')[:5]  # Random 5 profiles
+    # who_to_follow = BasicUserProfile.objects.exclude(
+    #     id__in=already_following
+    # ).exclude(
+    #     id=current_basic_user_profile.id
+    # ).order_by('?')[:5]  # Random 5 profiles
     
+    # get who to follow
+    who_to_follow = get_who_to_follow(
+        BasicUserProfile, ObjectDoesNotExist, random
+    )
+
     # Get topics to follow
-    try:
-        topics_to_follow = Topic.objects.annotate(
-            tweet_count=Count('tweet')
-        ).order_by('-tweet_count')[:5]
-    except ObjectDoesNotExist:
-        topics_to_follow = []
+    topics_to_follow = get_topics_to_follow(Topic, ObjectDoesNotExist, random)
 
     data = {
         "current_basic_user": current_basic_user,
