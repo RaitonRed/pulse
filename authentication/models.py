@@ -32,7 +32,7 @@ class BasicUserProfile(models.Model):
         upload_to="banner_photo/", blank=True, null=True
     )
     email = models.CharField(max_length=200, blank=True, null=True)
-    full_name = models.CharField(max_length=100, blank=True, null=True)
+    full_name = models.CharField(max_length=100, blank=False, null=False, default=f"کاربر {id}")
     bio = models.TextField(null=True, blank=True)
 
     def __str__(self):

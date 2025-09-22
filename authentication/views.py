@@ -40,6 +40,7 @@ def signup(request):
         password = request.POST.get("password")
         password_again = request.POST.get("password_again")
         username = request.POST.get("username")
+        full_name = request.POST.get("full_name")
 
         # Check if username/email or password contains blank spaces " "
         for char in email:
@@ -62,6 +63,7 @@ def signup(request):
             if bool(username) == False or username == "" \
                or bool(email) == False or email == "" \
                or bool(password) == False or password == "" \
+               or bool(full_name) == False or full_name == "" \
                or bool(password_again) == False or password_again == "":
                 invalid_credentials = True
             else:
