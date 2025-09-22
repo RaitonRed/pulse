@@ -29,21 +29,23 @@ def mobile_tweet_form_processing(request, Tweet, current_basic_user_profile):
 # Who to follow box cells
 def get_who_to_follow(BasicUserProfile, ObjectDoesNotExist, random):
     try:
-        latest_user = BasicUserProfile.objects.last()
+        # دریافت تمامی کاربران
+        all_users = list(BasicUserProfile.objects.all())
+        
+        # اگر کاربری وجود ندارد، لیست خالی بازگردانده شود
+        if not all_users:
+            return []
+            
+        # اگر تعداد کاربران کمتر یا مساوی ۳ باشد، همه را بازگردان
+        if len(all_users) <= 3:
+            return all_users
+            
+        # انتخاب تصادفی ۳ کاربر منحصر به فرد
+        who_to_follow = random.sample(all_users, 3)
+        return who_to_follow
+        
     except ObjectDoesNotExist:
-        latest_user = None
-
-    number_1 = random.randint(1, latest_user.id)
-    number_2 = random.randint(1, latest_user.id)
-    number_3 = random.randint(1, latest_user.id)
-
-    who_to_follow = []
-
-    who_to_follow.append(BasicUserProfile.objects.get(id=number_1))
-    who_to_follow.append(BasicUserProfile.objects.get(id=number_2))
-    who_to_follow.append(BasicUserProfile.objects.get(id=number_3))
-
-    return who_to_follow
+        return []
 
 
 # Topics to follow
