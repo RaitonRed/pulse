@@ -47,7 +47,7 @@ def save_tweet_topics(sender, instance, created, **kwargs):
         hashtags = instance.extract_hashtags()
         for tag_name in hashtags:
             topic, created = Topic.objects.get_or_create(name=tag_name.lower())
-            instance.topic.add(topic)
+            instance.topics.add(topic)
 
 # Tweet Comment
 # --------------
