@@ -16,7 +16,7 @@
 <div id="right-box">
   <img src="{% static 'branding/logo.png' %}" alt="logo" />
   <h1>Happening now</h1>
-  <h3>Join ChirpNet today.</h3>
+  <h3>Join Pulse today.</h3>
   <button id="signup-button">Sign up</button>
   <button id="login-button"><a href="{% url 'login' %}">Log in</a></button>
   <form action="{% url 'signup' %}" method="POST">
@@ -63,7 +63,7 @@
     <input type="text" placeholder="Enter your full name." name="full_name" required />
 
     <p id="terms">
-      By clicking on sign-up, you agree to ChirpNet's <a href="{% url 'terms' %}">Terms and Conditions of Use</a>.
+      By clicking on sign-up, you agree to Pulse's <a href="{% url 'terms' %}">Terms and Conditions of Use</a>.
     </p>
 
     <input id="signup-submit-btn" type="submit" value="Sign up" name="signup_submit_button" />
