@@ -33,7 +33,7 @@ class BasicUserProfile(models.Model):
     )
     email = models.CharField(max_length=200, blank=True, null=True)
     full_name = models.CharField(max_length=100, blank=False, null=False, default=f"کاربر {id}")
-    bio = models.TextField(null=True, blank=True)
+    bio = models.TextField(max_length=250, null=True, blank=True, default="سلام من کاربر پالس هستم")
 
     def __str__(self):
         return "User: " + str(self.user.username)
