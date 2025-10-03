@@ -299,8 +299,15 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ----------------- main content container ----------------- */
 #content-container {
-  margin-left: 14%;
-  margin-right: 38%;
+    margin-left: 4rem; /* ml-16 */
+    margin-right: 0;
+}
+
+@media (min-width: 1024px) {
+    #content-container {
+        margin-left: 5rem; /* lg:ml-20 */
+        margin-right: 24rem; /* lg:mr-96 */
+    }
 }
 
 #half-base-content-container {

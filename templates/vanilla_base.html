@@ -1,10 +1,9 @@
 {% load static %}
-
 <!doctype html>
 <html>
-  <head>
+<head>
     <title>Pulse</title>
-
+    
     <!-- Meta Info -->
     <meta charset="utf-8" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -14,36 +13,18 @@
     <!-- FAVICON -->
     <link rel="icon" href="{% static 'branding/logo.png' %}" />
 
-    <!-- GOOGLE FONTS -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Prata" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Literata&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- FONT AWSOME -->
-    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
-    <!-- REMIX ICON -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-
-
-    <!-- BASE CSS LINKS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/auth/signup.css' %}" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     {% block css_link %}
-
     {% endblock %}
+</head>
 
-  </head>
-
-  <body>
-
+<body class="bg-gray-50 min-h-screen">
     {% block content %}
-
     {% endblock %}
-
-  </body>
+</body>
 </html>
