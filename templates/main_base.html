@@ -56,7 +56,7 @@
       {% if current_basic_user_profile.profile_photo  %}
         <div id="profile-photo-left-nav" style="background-image: url('{{ current_basic_user_profile.profile_photo.url }}');"></div>
       {% else %}
-        <div id="profile-photo-left-nav"></div>
+        <div id="profile-photo-left-nav" style="background-image:url({% static 'images/default-profile.png' %})"></div>
       {% endif %}
 
 
@@ -125,7 +125,7 @@
       {% if current_basic_user_profile.profile_photo  %}
       <div id="profile-photo-mobile-left-nav-opener" style="background-image: url('{{ current_basic_user_profile.profile_photo.url }}');"></div>
       {% else %}
-        <div id="profile-photo-mobile-left-nav-opener"></div>
+        <div id="profile-photo-mobile-left-nav-opener" style="background-image:url({% static 'images/default-profile.png' %})"></div>
       {% endif %}
 
       <div id="temporary-top-mobile-nav-logo">
@@ -274,7 +274,7 @@
                 {% if user.profile_photo %}
                   <div id="who-to-follow-profile-photo" style="background-image: url('{{ user.profile_photo.url }}');"></div>
                 {% else %}
-                <div id="who-to-follow-profile-photo"></div>
+                <div id="who-to-follow-profile-photo" style="background-image:url({% static 'images/default-profile.png' %})"></div>
                 {% endif %}
               </div>
               <div id="who-to-follow-cell-center-part">
@@ -316,7 +316,7 @@
           {% if current_basic_user_profile.profile_photo %}
           <div id="hidden-mobile-tweet-panel-profile-photo" style="background-image: url('{{ current_basic_user_profile.profile_photo.url }}');"></div>
           {% else %}
-            <div id="hidden-mobile-tweet-panel-profile-photo" ></div>
+            <div id="hidden-mobile-tweet-panel-profile-photo" style="background-image:url({% static 'images/default-profile.png' %})"></div>
           {% endif %}
 
 

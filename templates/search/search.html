@@ -23,7 +23,7 @@
       {% if searched_user.profile_photo %}
         <div id="search-cell-profile-photo" style="background-image:url({{ searched_user.profile_photo.url }})"></div>
       {% else %}
-        <div id="search-cell-profile-photo"></div>
+        <div id="search-cell-profile-photo" style="background-image:url({% static 'images/default-profile.png' %})"></div>
       {% endif %}
     </div>
     <div id="search-cell-middle-part">

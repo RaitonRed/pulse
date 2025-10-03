@@ -20,7 +20,7 @@
     {% if current_basic_user_profile.profile_photo %}
       <div id="home-tweet-form-left-part-profile-photo" style="background-image:url('{{ current_basic_user_profile.profile_photo.url }}')"></div>
     {% else %}
-      <div id="home-tweet-form-left-part-profile-photo"></div>
+      <div id="home-tweet-form-left-part-profile-photo" style="background-image:url({% static 'images/default-profile.png' %})"></div>
     {% endif %}
   </div>
   <div id="home-tweet-form-right-part">
@@ -48,7 +48,7 @@
         {% if tweet.user.profile_photo %}
           <div id="tweet-cell-left-part-profile-photo" style="background-image:url('{{ tweet.user.profile_photo.url }}')"></div>
         {% else %}
-          <div id="tweet-cell-left-part-profile-photo"></div>
+          <div id="tweet-cell-left-part-profile-photo" style="background-image:url({% static 'images/default-profile.png' %})"></div>
         {% endif %}
       </div>
       <div id="tweet-cell-right-part">

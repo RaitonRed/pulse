@@ -19,14 +19,14 @@
   {% if current_basic_user_profile.banner_photo %}
     <div id="profile-banner" style="background-image:url({{ current_basic_user_profile.banner_photo.url }})"></div>
   {% else %}
-    <div id="profile-banner"></div>
+    <div id="profile-banner" style="background-image:url({% static 'images/default-banner.png' %})"></div>
   {% endif %}
 
   <div id="profile-banner-bottom-part">
       {% if current_basic_user_profile.profile_photo %}
         <div id="profile-photo" style="background-image:url({{ current_basic_user_profile.profile_photo.url }})"></div>
       {% else %}
-        <div id="profile-photo"></div>
+        <div id="profile-photo" style="background-image:url({% static 'images/default-profile.png' %})"></div>
       {% endif %}
 
       <div id="clear"></div>
@@ -62,7 +62,7 @@
     {% if tweet.user.profile_photo %}
       <div id="tweet-cell-left-part-profile-photo" style="background-image:url('{{ tweet.user.profile_photo.url }}')"></div>
     {% else %}
-      <div id="tweet-cell-left-part-profile-photo"></div>
+      <div id="tweet-cell-left-part-profile-photo" style="background-image:url({% static 'images/default-profile.png' %})"></div>
     {% endif %}
   </div>
 
