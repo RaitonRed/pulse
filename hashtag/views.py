@@ -115,7 +115,7 @@ def topic_explore(request, topic, page):
 
     try:
         tweet_feed = Tweet.objects.filter(
-            topic=current_topic
+            topics=current_topic
         ).order_by("-id")
     except ObjectDoesNotExist:
         tweet_feed = None
